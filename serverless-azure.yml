@@ -1,0 +1,43 @@
+service: ${env:SLS_SERVICE_NAME} # Name of the CloudFormation stack
+functions: ${file(serverless/functions/index.js), ""}
+resources: ${file(serverless/resources/index.js), ""}
+
+frameworkVersion: ">=1.21.0 <2.0.0" # Serverless Framework version constraints
+
+defaults:
+  stage: ${env:SLS_STAGE}
+  region: ${env:SLS_REGION}
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  memorySize: 512
+  stage: ${env:SLS_STAGE}
+  region: ${env:SLS_REGION}
+  profile: ${env:SLS_PROFILE}
+  versionFunctions: false
+  role: arn:aws:iam::${env:AWS_ACCOUNT_ID}:role/production-api-gateway-role
+
+plugins:
+  - serverless-webpack
+  - serverless-offline
+  - serverless-dotenv-plugin
+
+package:
+  individually: true
+  excludeDevDependencies: true
+
+custom:
+  serverless-offline:
+    port: ${env:PROJECT_PORT}
+  webpack:
+    packager: npm
+    webpackConfig: build/webpack.config.js
+    includeModules:
+      forceExclude:
+        - "aws-sdk"
+
+resources:
+  - ${file(resources/api-gateway-errors.yml)}
+  - ${file(resources/dynamodb-table.yml)}
+  - ${file(resources/s3-bucket.yml)}
