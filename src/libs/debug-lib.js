@@ -13,14 +13,14 @@ export default function debug() {
   });
 }
 
-export function init(event, context) {
+export function init(body, pathParams, queryParams) {
   logs = [];
 
   // Log API event
   debug("API event", {
-    body: event.body,
-    pathParameters: event.pathParameters,
-    queryStringParameters: event.queryStringParameters,
+    body: body,
+    pathParameters: pathParams,
+    queryStringParameters: queryParams,
   });
 }
 

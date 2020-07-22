@@ -1,7 +1,7 @@
 import handler from "@/libs/handler-lib";
 // import dynamoDb from "@/libs/dynamodb-lib";
 
-export const main = handler(async (event, ...props) => {
+export const main = handler(async (data) => {
   // const params = {
   //   TableName: process.env.tableName,
   //   // 'KeyConditionExpression' defines the condition for the query
@@ -17,18 +17,9 @@ export const main = handler(async (event, ...props) => {
   // };
 
   // const result = await dynamoDb.query(params);
-
+  
   // // Return the matching list of items in response body
   // return result.Items;
-  // if(props[0].log) {
-  //   props[0].log(props);
-  // }
-  console.log("asdfasdf");
-  // context.log.info({hello: 'world'});
-  // context.log("Context=", JSON.stringify(context, null, 2));
-  // context.log("Props=", JSON.stringify(props, null, 2));
-  // context.res = {
-  //   status: 200,
-  //   body: "Hello func2"
-  // }
+
+  return data;
 });

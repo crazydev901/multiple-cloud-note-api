@@ -1,15 +1,43 @@
 import * as debug from "./debug-lib";
 
 export default function handler(lambda) {
-  return async function (event, context) {
+  /**
+   * @param {Object} EventOrContext - aws: event, azure: context
+   * @param {Object} ContextOrRequest - aws: context, azure: request
+   */
+  return async function () {
+    let reqBody, reqHeaders, reqPathParams, reqQueryParams, context, type;
     let body, statusCode;
 
+    console.log(arguments);
+    if (arguments[0].constructor.name === "InvocationContext") {
+      reqBody = arguments[0].req.body;
+      reqPathParams = arguments[0].req.params;
+      reqQueryParams = arguments[0].req.query;
+      context = arguments[0];
+      type = "Azure";
+    } else if (arguments[0].requestContext && arguments[0].requestContext.identity) {
+      reqBody = arguments[0].body;
+      reqPathParams = arguments[0].pathParameters;
+      reqQueryParams = arguments[0].queryStringParameters;
+      reqHeaders = arguments[0].headers;
+      context = arguments[0];
+      type = "AWS";
+    }
+
     // Start debugger
-    debug.init(event, context);
+    debug.init(reqBody, reqPathParams, reqQueryParams);
 
     try {
       // Run the Lambda
-      body = await lambda(event, context);
+      body = await lambda({
+        type,
+        headers: reqHeaders,
+        body: reqBody,
+        path: reqPathParams,
+        query: reqQueryParams,
+        context,
+      });
       statusCode = 200;
     } catch (e) {
       // Print debug messages
@@ -20,13 +48,26 @@ export default function handler(lambda) {
     }
 
     // Return HTTP response
-    return {
-      statusCode,
-      body: JSON.stringify(body),
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Credentials": true,
-      },
-    };
+    if (type === "Azure") {
+      context.res = {
+        status: 200,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": true,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      };
+      context.done();
+    } else {
+      return {
+        statusCode,
+        body: JSON.stringify(body),
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": true,
+        },
+      };
+    }
   };
 }

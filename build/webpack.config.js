@@ -23,7 +23,7 @@ const config = {
 
   output: {
     libraryTarget: "commonjs",
-    path: resolve(".webpack"),
+    path: resolve(".webpack"), // !important: for serverless-azure-functions
     filename: "[name].js",
   },
 

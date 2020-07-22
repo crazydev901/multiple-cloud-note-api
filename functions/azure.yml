@@ -1,7 +1,71 @@
-azuretest:
-  handler: src/handlers/azuretest.main
+create:
+  # Defines an HTTP API endpoint that calls the main function in create.js
+  # - path: url path is /notes
+  # - method: POST request
+  handler: src/handlers/create.main
   events:
     - http: true
+      route: notes
       methods:
-        - GET
+        - post
+      authLevel: anonymous
+
+get:
+  # Defines an HTTP API endpoint that calls the main function in get.js
+  # - path: url path is /notes/{id}
+  # - method: GET request
+  handler: src/handlers/get.main
+  events:
+    - http: true
+      route: notes/{id}
+      methods:
+        - get
+      authLevel: anonymous
+
+list:
+  # Defines an HTTP API endpoint that calls the main function in list.js
+  # - path: url path is /notes
+  # - method: GET request
+  handler: src/handlers/list.main
+  events:
+    - http: true
+      route: notes
+      methods:
+        - get
+      authLevel: anonymous
+
+update:
+  # Defines an HTTP API endpoint that calls the main function in update.js
+  # - path: url path is /notes/{id}
+  # - method: PUT request
+  handler: src/handlers/update.main
+  events:
+    - http: true
+      route: notes/{id}
+      methods:
+        - put
+      authLevel: anonymous
+
+delete:
+  # Defines an HTTP API endpoint that calls the main function in delete.js
+  # - path: url path is /notes/{id}
+  # - method: DELETE request
+  handler: src/handlers/delete.main
+  events:
+    - http: true
+      route: notes/{id}
+      methods:
+        - delete
+      authLevel: anonymous
+
+billing:
+  # Defines an HTTP API endpoint that calls the main function in billing.js
+  # - path: url path is /billing
+  # - method: POST request
+  handler: src/handlers/billing.main
+  events:
+    - http: true
+      route: billing
+      methods:
+        - post
       authLevel: anonymous

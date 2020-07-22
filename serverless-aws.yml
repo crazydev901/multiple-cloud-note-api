@@ -28,6 +28,7 @@ package:
 
 custom:
   serverless-offline:
+    useChildProcesses: true # https://github.com/dherault/serverless-offline/issues/931#issuecomment-602245703
     port: ${env:PROJECT_PORT}
   webpack:
     packager: npm
