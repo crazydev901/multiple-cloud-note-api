@@ -9,13 +9,12 @@
   "scripts": {
     "lint": "eslint src/**/*.js",
     "test": "BABEL_DISABLE_CACHE=1 TEST=1 node -r esm jest-config/index.js",
-    "sls": "run(){ node -r esm node_modules/.bin/sls $1; }; run",
     "start": "npm run start:aws",
-    "start:aws": "npm run sls 'offline start --watch --config serverless-aws.yml'",
-    "start:azure": "npm run sls 'offline start --watch --config serverless-azure.yml'",
+    "start:aws": "sls offline --config ./serverless-aws.yml",
+    "start:azure": "sls offline --config ./serverless-azure.yml",
     "deploy": "npm run deploy:azure && npm run deploy:aws",
-    "deploy:aws": "npm run sls 'deploy --verbose --config serverless-aws.yml'",
-    "deploy:azure": "npm run sls 'deploy --verbose --config serverless-azure.yml'"
+    "deploy:aws": "sls deploy --verbose --config serverless-aws.yml",
+    "deploy:azure": "sls deploy --verbose --config serverless-azure.yml"
   },
   "dependencies": {
     "stripe": "8.32.0",
@@ -45,6 +44,7 @@
     "jest": "24.0.0",
     "prettier": "^2.0.5",
     "serverless": "^1.75.0",
+    "serverless-azure-functions": "^2.0.0",
     "serverless-dotenv-plugin": "^2.4.2",
     "serverless-offline": "^6.4.0",
     "serverless-webpack": "^5.3.2",

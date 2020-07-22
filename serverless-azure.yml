@@ -1,43 +1,39 @@
-service: ${env:SLS_SERVICE_NAME} # Name of the CloudFormation stack
-functions: ${file(serverless/functions/index.js), ""}
-resources: ${file(serverless/resources/index.js), ""}
+service: api # Name of the App
+functions: ${file(functions/azure.yml)}
+# resources:
+#   - ${file(resources/aws/api-gateway-errors.yml)}
+#   - ${file(resources/aws/dynamodb-table.yml)}
+#   - ${file(resources/aws/s3-bucket.yml)}
 
 frameworkVersion: ">=1.21.0 <2.0.0" # Serverless Framework version constraints
 
-defaults:
-  stage: ${env:SLS_STAGE}
-  region: ${env:SLS_REGION}
-
 provider:
-  name: aws
-  runtime: nodejs12.x
-  memorySize: 512
-  stage: ${env:SLS_STAGE}
-  region: ${env:SLS_REGION}
-  profile: ${env:SLS_PROFILE}
+  name: azure
+  runtime: nodejs12
+  prefix: int
+  stage: qa
+  region: West US
   versionFunctions: false
-  role: arn:aws:iam::${env:AWS_ACCOUNT_ID}:role/production-api-gateway-role
+  os: linux
+  apim: true
 
 plugins:
-  - serverless-webpack
-  - serverless-offline
+  - serverless-azure-functions
   - serverless-dotenv-plugin
+  - serverless-webpack
 
 package:
   individually: true
   excludeDevDependencies: true
+  exclude:
+    - local.settings.json
+    - .vscode/**
 
 custom:
-  serverless-offline:
-    port: ${env:PROJECT_PORT}
   webpack:
     packager: npm
+    excludeFiles: ./**/*.test.js # Provide a glob for files to ignore
     webpackConfig: build/webpack.config.js
     includeModules:
       forceExclude:
         - "aws-sdk"
-
-resources:
-  - ${file(resources/api-gateway-errors.yml)}
-  - ${file(resources/dynamodb-table.yml)}
-  - ${file(resources/s3-bucket.yml)}

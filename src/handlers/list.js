@@ -1,7 +1,7 @@
 import handler from "@/libs/handler-lib";
-import dynamoDb from "@/libs/dynamodb-lib";
+// import dynamoDb from "@/libs/dynamodb-lib";
 
-export const main = handler(async (context, ...props) => {
+export const main = handler(async (event, ...props) => {
   // const params = {
   //   TableName: process.env.tableName,
   //   // 'KeyConditionExpression' defines the condition for the query
@@ -23,13 +23,12 @@ export const main = handler(async (context, ...props) => {
   // if(props[0].log) {
   //   props[0].log(props);
   // }
-  console.log(props);
-  return;
-  context.log.info({hello: 'world'});  
-  context.log("Context=", JSON.stringify(context, null, 2));
-  context.log("Props=", JSON.stringify(props, null, 2));
-  context.res = {
-    status: 200,
-    body: "Hello func2"
-  }
+  console.log("asdfasdf");
+  // context.log.info({hello: 'world'});
+  // context.log("Context=", JSON.stringify(context, null, 2));
+  // context.log("Props=", JSON.stringify(props, null, 2));
+  // context.res = {
+  //   status: 200,
+  //   body: "Hello func2"
+  // }
 });

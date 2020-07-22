@@ -12,8 +12,8 @@ provider:
   runtime: nodejs12.x
   memorySize: 512
   stage: ${env:SLS_STAGE}
-  region: ${env:SLS_REGION}
-  profile: ${env:SLS_PROFILE}
+  region: ${env:SLS_REGION_AWS}
+  profile: ${env:SLS_PROFILE_AWS}
   versionFunctions: false
   role: arn:aws:iam::${env:AWS_ACCOUNT_ID}:role/production-api-gateway-role
 
@@ -31,6 +31,7 @@ custom:
     port: ${env:PROJECT_PORT}
   webpack:
     packager: npm
+    excludeFiles: ./**/*.test.js # Provide a glob for files to ignore
     webpackConfig: build/webpack.config.js
     includeModules:
       forceExclude:

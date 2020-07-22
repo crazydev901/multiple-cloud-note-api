@@ -23,7 +23,7 @@ const config = {
 
   output: {
     libraryTarget: "commonjs",
-    path: resolve("build/.webpack"),
+    path: resolve(".webpack"),
     filename: "[name].js",
   },
 
@@ -43,7 +43,6 @@ const config = {
     modules: [resolve("src"), resolve("node_modules")],
     alias: {
       "@": resolve("src"), // !IMPORTANT! ABSOLUTE PATH!
-      "@env": resolve("build/env-vars"), // !IMPORTANT! ABSOLUTE PATH!
     },
   },
 
