@@ -10,11 +10,11 @@
     "lint": "eslint src/**/*.js",
     "test": "BABEL_DISABLE_CACHE=1 TEST=1 node -r esm jest-config/index.js",
     "start": "npm run start:aws",
-    "start:aws": "sls offline --config ./serverless-aws.yml",
-    "start:azure": "sls offline --config ./serverless-azure.yml",
+    "start:aws": "NODE_ENV=development && SLS_CLOUD=aws && sls offline --config ./serverless-aws.yml --env aws",
+    "start:azure": "NODE_ENV=development && SLS_CLOUD=azure && sls offline --config ./serverless-azure.yml --env azure",
     "deploy": "npm run deploy:azure && npm run deploy:aws",
-    "deploy:aws": "sls deploy --verbose --config serverless-aws.yml",
-    "deploy:azure": "sls deploy --verbose --config serverless-azure.yml"
+    "deploy:aws": "NODE_ENV=production && SLS_CLOUD=aws && sls deploy --verbose --config serverless-aws.yml --env aws",
+    "deploy:azure": "NODE_ENV=production && SLS_CLOUD=azure && sls deploy --verbose --config serverless-azure.yml --env azure"
   },
   "dependencies": {
     "stripe": "8.32.0",

@@ -9,7 +9,6 @@ export default function handler(lambda) {
     let reqBody, reqHeaders, reqPathParams, reqQueryParams, context, type;
     let body, statusCode;
 
-    console.log(arguments);
     if (arguments[0].constructor.name === "InvocationContext") {
       reqBody = arguments[0].req.body;
       reqPathParams = arguments[0].req.params;

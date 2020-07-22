@@ -1,4 +1,4 @@
-service: api # Name of the App
+service: ${env:AZURE_SLS_SERVICE_NAME} # Name of the App
 functions: ${file(functions/azure.yml)}
 # resources:
 #   - ${file(resources/aws/api-gateway-errors.yml)}
@@ -10,12 +10,13 @@ frameworkVersion: ">=1.21.0 <2.0.0" # Serverless Framework version constraints
 provider:
   name: azure
   runtime: nodejs12
-  prefix: int
-  stage: qa
-  region: West US
+  prefix: ${env:AZURE_SLS_SERVICE_PREFIX}
+  stage: ${env:AZURE_SLS_STAGE}
+  region: ${env:AZURE_SLS_REGION}
   versionFunctions: false
   os: linux
   apim: true
+  resourceGroup: DavidTest
 
 plugins:
   - serverless-azure-functions
@@ -23,7 +24,6 @@ plugins:
   - serverless-webpack
 
 package:
-  individually: true
   excludeDevDependencies: true
   exclude:
     - local.settings.json
