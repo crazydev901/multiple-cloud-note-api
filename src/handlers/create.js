@@ -23,8 +23,8 @@ export const main = handler(async (event) => {
       // userId: event.requestContext.identity.cognitoIdentityId,
       userId: "user1",
       noteId: uuid.v1(),
-      content: data.body.content,
-      attachment: data.body.attachment,
+      content: data.content,
+      attachment: data.attachment,
       createdAt: Date.now(),
     },
   };

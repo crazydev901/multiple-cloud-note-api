@@ -10,7 +10,7 @@ export default function handler(func) {
     let body, statusCode;
 
     if (arguments[0].constructor.name === "InvocationContext") {
-      reqBody = arguments[0].req.body;
+      reqBody = JSON.stringify(arguments[0].req.body);
       reqPathParams = arguments[0].req.params;
       reqQueryParams = arguments[0].req.query;
       context = arguments[0];
