@@ -16,6 +16,9 @@ provider:
   profile: ${env:AWS_SLS_PROFILE}
   versionFunctions: false
   role: arn:aws:iam::${env:AWS_ACCOUNT_ID}:role/note-api-gateway-role
+  environment: # these will be created as application settings
+    TABLE_NAME: ${env:TABLE_NAME},
+    STRIPE_SECRET_KEY: ${env:STRIPE_SECRET_KEY},
 
 plugins:
   - serverless-webpack

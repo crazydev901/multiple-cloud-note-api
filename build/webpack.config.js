@@ -25,6 +25,7 @@ const config = {
     libraryTarget: "commonjs",
     path: resolve(".webpack"), // !important: for serverless-azure-functions
     filename: "[name].js",
+    chunkFilename: '[name].bundle.js',
   },
 
   performance: {

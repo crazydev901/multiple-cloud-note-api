@@ -17,6 +17,10 @@ provider:
   os: linux
   apim: true
   resourceGroup: DavidTest
+  environment: # these will be created as application settings
+    TABLE_NAME: ${env:TABLE_NAME},
+    STRIPE_SECRET_KEY: ${env:STRIPE_SECRET_KEY},
+    AZURE_COSMOS_DB_URI: mongodb://${env:AZURE_COSMOS_MONGO_DB_NAME}:${env:AZURE_COSMOS_MONGO_DB_KEY}@${env:AZURE_COSMOS_MONGO_DB_NAME}.mongo.cosmos.azure.com:${env:AZURE_COSMOS_MONGO_DB_PORT}/?ssl=true&appName=@${env:AZURE_COSMOS_MONGO_DB_NAME}@
 
 plugins:
   - serverless-azure-functions

@@ -1,6 +1,6 @@
 import * as debug from "./debug-lib";
 
-export default function handler(lambda) {
+export default function handler(func) {
   /**
    * @param {Object} EventOrContext - aws: event, azure: context
    * @param {Object} ContextOrRequest - aws: context, azure: request
@@ -29,12 +29,13 @@ export default function handler(lambda) {
 
     try {
       // Run the Lambda
-      body = await lambda({
+      console.log(typeof body);
+      body = await func({
         type,
         headers: reqHeaders,
         body: reqBody,
-        path: reqPathParams,
-        query: reqQueryParams,
+        pathParameters: reqPathParams,
+        queryStringParameters: reqQueryParams,
         context,
       });
       statusCode = 200;
@@ -49,7 +50,7 @@ export default function handler(lambda) {
     // Return HTTP response
     if (type === "Azure") {
       context.res = {
-        status: 200,
+        status: statusCode,
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Credentials": true,

@@ -2,7 +2,7 @@ Resources:
   NotesTable:
     Type: AWS::DynamoDB::Table
     Properties:
-      TableName: notes
+      TableName: note
       AttributeDefinitions:
         - AttributeName: userId
           AttributeType: S

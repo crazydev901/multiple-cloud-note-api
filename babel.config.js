@@ -10,7 +10,7 @@ module.exports = {
       {
         modules: false,
         targets: {
-          node: "8.10",
+          node: "12.13",
         },
         loose: true,
         useBuiltIns: "usage", // Polyfill less

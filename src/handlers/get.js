@@ -1,25 +1,36 @@
 import handler from "@/libs/handler-lib";
-// import dynamoDb from "@/libs/dynamodb-lib";
+/* AWS-BLOCK-START */
+import dynamoDB from "@/libs/dynamodb-lib";
+/* AWS-BLOCK-END */
+/* AZURE-BLOCK-START */
+import mongoDB from "@/libs/mongodb-lib";
+/* AZURE-BLOCK-END */
 
-export const main = handler(async (data) => {
-  // const params = {
-  //   TableName: process.env.tableName,
-  //   // 'Key' defines the partition key and sort key of the item to be retrieved
-  //   // - 'userId': Identity Pool identity id of the authenticated user
-  //   // - 'noteId': path parameter
-  //   Key: {
-  //     userId: event.requestContext.identity.cognitoIdentityId,
-  //     noteId: event.pathParameters.id
-  //   }
-  // };
+export const main = handler(async (event) => {
+  const params = {
+    TableName: process.env.TABLE_NAME,
+    // 'Key' defines the partition key and sort key of the item to be retrieved
+    // - 'userId': Identity Pool identity id of the authenticated user
+    // - 'noteId': path parameter
+    Key: {
+      // userId: event.requestContext.identity.cognitoIdentityId,
+      userId: "user1",
+      noteId: event.pathParameters.id,
+    },
+  };
 
-  // const result = await dynamoDb.get(params);
-  // if ( ! result.Item) {
-  //   throw new Error("Item not found.");
-  // }
+  let result;
+  /* AWS-BLOCK-START */
+  result = await dynamoDB.get(params);
+  /* AWS-BLOCK-END */
+  /* AZURE-BLOCK-START */
+  result = await mongoDB.get(params);
+  /* AZURE-BLOCK-END */
 
-  // // Return the retrieved item
-  // return result.Item;
+  if (!result || !result.Item) {
+    throw new Error("Item not found.");
+  }
 
-  return data;
+  // Return the retrieved item
+  return result.Item;
 });
