@@ -8,7 +8,7 @@
   },
   "scripts": {
     "lint": "eslint src/**/*.js",
-    "test": "BABEL_DISABLE_CACHE=1 TEST=1 node -r esm jest-config/index.js",
+    "test": "BABEL_DISABLE_CACHE=1 TEST=1 node jest-config/index.js",
     "start": "npm run start:aws",
     "start:aws": "NODE_ENV=development && SLS_CLOUD=aws && sls offline --config ./serverless-aws.yml --env aws",
     "start:azure": "NODE_ENV=development && SLS_CLOUD=azure && sls offline --config ./serverless-azure.yml --env azure",
@@ -45,7 +45,6 @@
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
-    "esm": "3.0.84",
     "jest": "24.0.0",
     "prettier": "^2.0.5",
     "serverless": "^1.75.0",
